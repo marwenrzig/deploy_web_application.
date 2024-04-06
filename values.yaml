@@ -1,0 +1,60 @@
+# Define image repository and tag
+image:
+  repository: marwenrzig/node-app
+  tag: latest
+
+# Define resource requests and limits for the application pods
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "250m"
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
+
+# Define service type and port
+service:
+  type: LoadBalancer
+  port: 80
+
+# Define number of replicas
+replicaCount: 3
+
+# Define environment variables for the application
+env:
+  NODE_ENV: production
+
+# Define liveness and readiness probes
+probes:
+  livenessProbe:
+    path: /
+    port: 3000
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  readinessProbe:
+    path: /
+    port: 3000
+    initialDelaySeconds: 5
+    periodSeconds: 10
+
+# Define ingress configuration
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: exemple-node.com
+      paths:
+        - path: /
+          pathType: Prefix
+
+# Define autoscaling configuration
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 50
+
+# Define network policy
+networkPolicy:
+  enabled: false
+
